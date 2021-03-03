@@ -107,7 +107,7 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
-                              <Component id="iterationLabel1" min="-2" max="-2" attributes="0"/>
+                              <Component id="iterationLabel" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="iterationSeperator" max="32767" attributes="0"/>
                           </Group>
@@ -157,7 +157,7 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="1" attributes="0">
-                          <Component id="iterationLabel1" min="-2" max="-2" attributes="0"/>
+                          <Component id="iterationLabel" min="-2" max="-2" attributes="0"/>
                           <Component id="iterationSeperator" min="-2" pref="10" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
@@ -224,7 +224,7 @@
             </Component>
             <Component class="javax.swing.JSpinner" name="iterationSpinner">
             </Component>
-            <Component class="javax.swing.JLabel" name="iterationLabel1">
+            <Component class="javax.swing.JLabel" name="iterationLabel">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Segoe UI" size="12" style="1"/>
@@ -437,6 +437,9 @@
           <Properties>
             <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
               <Dimension value="[898, 686]"/>
+            </Property>
+            <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+              <Dimension value="[40, 40]"/>
             </Property>
           </Properties>
 

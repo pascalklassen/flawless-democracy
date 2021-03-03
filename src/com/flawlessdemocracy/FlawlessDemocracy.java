@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Random;
 import javax.swing.JColorChooser;
 import javax.swing.JTextField;
+import javax.swing.Timer;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -45,6 +46,12 @@ public class FlawlessDemocracy extends javax.swing.JFrame {
         
         blobGrid.setup();
         repaintGrid();
+        
+//        Timer timer = new Timer(150, (event) -> {
+//            blobGrid.iterate(100000);
+//        });
+//        timer.setRepeats(true);
+//        timer.start();
     }
 
     @SuppressWarnings("unchecked")
@@ -56,7 +63,7 @@ public class FlawlessDemocracy extends javax.swing.JFrame {
         iterateButton = new javax.swing.JButton();
         partyLabel = new javax.swing.JLabel();
         iterationSpinner = new javax.swing.JSpinner();
-        iterationLabel1 = new javax.swing.JLabel();
+        iterationLabel = new javax.swing.JLabel();
         iterationSeperator = new javax.swing.JSeparator();
         partySeperator = new javax.swing.JSeparator();
         partyNameLabel = new javax.swing.JLabel();
@@ -109,8 +116,8 @@ public class FlawlessDemocracy extends javax.swing.JFrame {
         partyLabel.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         partyLabel.setText("Party Configuration");
 
-        iterationLabel1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        iterationLabel1.setText("Iterations");
+        iterationLabel.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        iterationLabel.setText("Iterations");
 
         partyNameLabel.setText("Party Name");
 
@@ -228,7 +235,7 @@ public class FlawlessDemocracy extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(controlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(controlPanelLayout.createSequentialGroup()
-                        .addComponent(iterationLabel1)
+                        .addComponent(iterationLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(iterationSeperator))
                     .addGroup(controlPanelLayout.createSequentialGroup()
@@ -265,7 +272,7 @@ public class FlawlessDemocracy extends javax.swing.JFrame {
             .addGroup(controlPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(controlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(iterationLabel1)
+                    .addComponent(iterationLabel)
                     .addComponent(iterationSeperator, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(controlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -304,6 +311,7 @@ public class FlawlessDemocracy extends javax.swing.JFrame {
         scrollPane.setPreferredSize(new java.awt.Dimension(900, 688));
 
         gridPanel.setMaximumSize(new java.awt.Dimension(898, 686));
+        gridPanel.setMinimumSize(new java.awt.Dimension(40, 40));
 
         javax.swing.GroupLayout gridPanelLayout = new javax.swing.GroupLayout(gridPanel);
         gridPanel.setLayout(gridPanelLayout);
@@ -375,6 +383,15 @@ public class FlawlessDemocracy extends javax.swing.JFrame {
     
     private void repaintGrid() {
         gridPanel.removeAll();
+        
+        Dimension dim = new Dimension(
+                getGridWidth() * Blob.CELL_SIZE_DIMENSION.width,
+                getGridHeight() * Blob.CELL_SIZE_DIMENSION.height
+        );
+        
+        gridPanel.setPreferredSize(dim);
+        gridPanel.setSize(dim);
+        System.out.println(dim);
         
         GridLayout gridLayout = new GridLayout(getGridHeight(), getGridWidth());
         gridPanel.setLayout(gridLayout);
@@ -476,7 +493,7 @@ public class FlawlessDemocracy extends javax.swing.JFrame {
     private javax.swing.JLabel gridWidthLabel1;
     private javax.swing.JSpinner gridWidthSpinner;
     private javax.swing.JButton iterateButton;
-    private javax.swing.JLabel iterationLabel1;
+    private javax.swing.JLabel iterationLabel;
     private javax.swing.JSeparator iterationSeperator;
     private javax.swing.JSpinner iterationSpinner;
     private javax.swing.JLabel partyColorLabel;

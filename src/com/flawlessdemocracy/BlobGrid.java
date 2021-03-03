@@ -3,6 +3,7 @@ package com.flawlessdemocracy;
 
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
@@ -60,10 +61,18 @@ public final class BlobGrid {
             Position position = positions.randomPosition(random);
             
             Blob left = getBlobAt(position);
+            List<Blob> n = getNeighborsAt(position);
+            
+            System.out.printf("=== Neighbors from (%s, %s) ===\n", position.getX(), position.getY());
+            n.forEach(System.out::println);
+            
+            System.out.println("=== The choosen one ===");
             Blob right = getNeighborsAt(position).get(random.nextInt(4));
+            System.out.println(right);
             
             if (!left.getParty().equals(right.getParty())) {
                 if (random.nextInt(2) == 0) {
+                    System.out.println("=== He was convinced !! ===");
                     right.setParty(left.getParty());
                 }
             }
@@ -87,14 +96,12 @@ public final class BlobGrid {
     }
     
     public List<Blob> getNeighborsAt(Position position) {
-        List<Blob> neighbors = new ArrayList();
-        
-        neighbors.add(getBlobAt(position.getTop()));
-        neighbors.add(getBlobAt(position.getRight()));
-        neighbors.add(getBlobAt(position.getBottom()));
-        neighbors.add(getBlobAt(position.getLeft()));
-        
-        return neighbors;
+        return Arrays.asList(
+                getBlobAt(position.getTop()),
+                getBlobAt(position.getRight()),
+                getBlobAt(position.getBottom()),
+                getBlobAt(position.getLeft())
+        );
     }
     
     public int getWidth() {
