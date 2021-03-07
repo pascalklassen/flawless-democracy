@@ -1,10 +1,11 @@
 
 package com.flawlessdemocracy;
 
+import com.flawlessdemocracy.world.NullWorld;
+import com.flawlessdemocracy.world.WorldFrame;
 import com.formdev.flatlaf.FlatDarkLaf;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.util.ArrayList;
 import java.util.Random;
@@ -40,18 +41,16 @@ public class FlawlessDemocracy extends javax.swing.JFrame {
         addParty(DEFAULT_DEMOCRATIC_PARTY);
         addParty(DEFAULT_REPUBLICAN_PARTY);
         
-        scrollPane.getVerticalScrollBar().setUnitIncrement(16);
-        scrollPane.getHorizontalScrollBar().setUnitIncrement(16);
-        scrollPane.setDoubleBuffered(true);
-        
         blobGrid.setup();
-        repaintGrid();
+        WorldFrame frame = new WorldFrame("World 1", new NullWorld());
+        desktopPane.add(frame);
         
-//        Timer timer = new Timer(150, (event) -> {
-//            blobGrid.iterate(100000);
-//        });
-//        timer.setRepeats(true);
-//        timer.start();
+        System.out.println(Thread.currentThread().getName());
+        Timer timer = new Timer(10, (event) -> {
+            frame.repaint();
+        });
+        timer.setRepeats(true);
+        timer.start();
     }
 
     @SuppressWarnings("unchecked")
@@ -82,8 +81,7 @@ public class FlawlessDemocracy extends javax.swing.JFrame {
         gridHeightSpinner = new javax.swing.JSpinner();
         gridWidthSpinner = new javax.swing.JSpinner();
         gridRandomizeButton = new javax.swing.JButton();
-        scrollPane = new javax.swing.JScrollPane();
-        gridPanel = new javax.swing.JPanel();
+        desktopPane = new javax.swing.JDesktopPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Flawless Democracy");
@@ -306,25 +304,21 @@ public class FlawlessDemocracy extends javax.swing.JFrame {
 
         tabbedPane.addTab("Controls", new javax.swing.ImageIcon(getClass().getResource("/resources/controls.png")), controlPanel); // NOI18N
 
-        scrollPane.setMaximumSize(new java.awt.Dimension(900, 688));
-        scrollPane.setMinimumSize(new java.awt.Dimension(0, 0));
-        scrollPane.setPreferredSize(new java.awt.Dimension(900, 688));
+        desktopPane.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        desktopPane.setDragMode(javax.swing.JDesktopPane.OUTLINE_DRAG_MODE);
+        desktopPane.setMaximumSize(new java.awt.Dimension(971, 688));
+        desktopPane.setMinimumSize(new java.awt.Dimension(971, 688));
 
-        gridPanel.setMaximumSize(new java.awt.Dimension(898, 686));
-        gridPanel.setMinimumSize(new java.awt.Dimension(40, 40));
-
-        javax.swing.GroupLayout gridPanelLayout = new javax.swing.GroupLayout(gridPanel);
-        gridPanel.setLayout(gridPanelLayout);
-        gridPanelLayout.setHorizontalGroup(
-            gridPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 898, Short.MAX_VALUE)
+        javax.swing.GroupLayout desktopPaneLayout = new javax.swing.GroupLayout(desktopPane);
+        desktopPane.setLayout(desktopPaneLayout);
+        desktopPaneLayout.setHorizontalGroup(
+            desktopPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 971, Short.MAX_VALUE)
         );
-        gridPanelLayout.setVerticalGroup(
-            gridPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 686, Short.MAX_VALUE)
+        desktopPaneLayout.setVerticalGroup(
+            desktopPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 688, Short.MAX_VALUE)
         );
-
-        scrollPane.setViewportView(gridPanel);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -333,8 +327,8 @@ public class FlawlessDemocracy extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(tabbedPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(scrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(desktopPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -343,7 +337,7 @@ public class FlawlessDemocracy extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(tabbedPane, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(scrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(desktopPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -353,12 +347,20 @@ public class FlawlessDemocracy extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void iterateButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_iterateButtonMouseClicked
-        blobGrid.iterate(getIterations());
+        //blobGrid.iterate(getIterations());
+        WorldFrame frame = new WorldFrame("World 1", new NullWorld());
+        desktopPane.add(frame);
+        
+        Timer timer = new Timer(10, (event) -> {
+            frame.repaint();
+        });
+        timer.setRepeats(true);
+        timer.start();
     }//GEN-LAST:event_iterateButtonMouseClicked
 
     private void chooseColorButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_chooseColorButtonMouseClicked
         Color color = JColorChooser.showDialog(this, "Choose a Party Color", Color.WHITE);
-        
+         
         if (color != null) {
             colorField.setBackground(color);
             colorField.repaint();
@@ -378,34 +380,9 @@ public class FlawlessDemocracy extends javax.swing.JFrame {
     
     private void gridRandomizeButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_gridRandomizeButtonMouseClicked
         blobGrid.setup(getGridWidth(), getGridHeight());
-        repaintGrid();
     }//GEN-LAST:event_gridRandomizeButtonMouseClicked
     
-    private void repaintGrid() {
-        gridPanel.removeAll();
-        
-        Dimension dim = new Dimension(
-                getGridWidth() * Blob.CELL_SIZE_DIMENSION.width,
-                getGridHeight() * Blob.CELL_SIZE_DIMENSION.height
-        );
-        
-        gridPanel.setPreferredSize(dim);
-        gridPanel.setSize(dim);
-        System.out.println(dim);
-        
-        GridLayout gridLayout = new GridLayout(getGridHeight(), getGridWidth());
-        gridPanel.setLayout(gridLayout);
-        
-        blobGrid.getBlobs()
-                .stream()
-                .map(Blob::getPanel)
-                .forEach(gridPanel::add);
-        
-        blobGrid.randomize();
-        
-        gridPanel.repaint();
-        gridPanel.revalidate();
-    }
+    
     
     private void addParty(Party party) {
         DefaultTableModel model = (DefaultTableModel) partyTable.getModel();
@@ -483,11 +460,11 @@ public class FlawlessDemocracy extends javax.swing.JFrame {
     private javax.swing.JButton chooseColorButton;
     private javax.swing.JTextField colorField;
     private javax.swing.JPanel controlPanel;
+    private javax.swing.JDesktopPane desktopPane;
     private javax.swing.JLabel gameLabel;
     private javax.swing.JSeparator gameSeperator;
     private javax.swing.JPanel gridConfigPanel;
     private javax.swing.JSpinner gridHeightSpinner;
-    private javax.swing.JPanel gridPanel;
     private javax.swing.JButton gridRandomizeButton;
     private javax.swing.JLabel gridWidthLabel;
     private javax.swing.JLabel gridWidthLabel1;
@@ -502,7 +479,6 @@ public class FlawlessDemocracy extends javax.swing.JFrame {
     private javax.swing.JLabel partyNameLabel;
     private javax.swing.JSeparator partySeperator;
     private javax.swing.JTable partyTable;
-    private javax.swing.JScrollPane scrollPane;
     private javax.swing.JTabbedPane tabbedPane;
     private javax.swing.JScrollPane tableScrollPane;
     // End of variables declaration//GEN-END:variables
