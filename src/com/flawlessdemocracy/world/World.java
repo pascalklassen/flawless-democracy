@@ -3,23 +3,58 @@ package com.flawlessdemocracy.world;
 
 import com.flawlessdemocracy.Blob;
 import com.flawlessdemocracy.Party;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
-public interface World {
+public abstract class World {
     
-    default void iterate() {
+    protected final PositionFactory positions;
+    
+    protected final List<Party> parties;
+    protected final List<Blob> blobs;
+    
+    protected final Random random;
+    
+    public World(PositionFactory positions, List<Party> parties) {
+        this.positions = positions;
+        this.parties = parties;
+        this.blobs = new ArrayList();
+        this.random = new Random(System.currentTimeMillis());
+    }
+    
+    public void iterate() {
         iterate(1);
     }
     
-    void iterate(int n);
+    public abstract void iterate(int n);
     
-    void randomize();
+    public abstract void randomize();
     
-    List<Party> getParties();
+    public List<Party> getParties() {
+        return Collections.unmodifiableList(parties);
+    }
     
-    Blob getBlobAt(Position position);
+    public Blob getBlobAt(Position position) {
+        return blobs.get(position.asLinear());
+    }
     
-    List<Blob> getBlobs();
+    public List<Blob> getBlobs() {
+        return Collections.unmodifiableList(blobs);
+    }
     
-    List<Blob> getNeighborsAt(Position position);
+    public List<Blob> getNeighborsAt(Position position) {
+        List<Blob> neighbors = new ArrayList();
+        
+        for (int i = -1; i <= 1; i++) {
+            for (int j = -1; j <= 1; j++) {
+                if (i == 0 && j == 0) continue;
+                
+                neighbors.add(getBlobAt(position.relative(j, i)));
+            }
+        }
+        
+        return neighbors;
+    }
 }

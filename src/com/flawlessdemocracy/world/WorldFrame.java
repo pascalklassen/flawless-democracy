@@ -5,9 +5,9 @@ import javax.swing.JInternalFrame;
 
 public final class WorldFrame extends JInternalFrame {
     
-    public WorldFrame(String title, World world) {
+    public WorldFrame(String title, WorldCanvas canvas) {
         super(title, false, true, false, true);
-        add(new WorldCanvas(world));
+        add(canvas);
         pack();
         setVisible(true);
     }

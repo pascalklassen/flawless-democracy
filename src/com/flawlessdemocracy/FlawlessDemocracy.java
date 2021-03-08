@@ -2,6 +2,8 @@
 package com.flawlessdemocracy;
 
 import com.flawlessdemocracy.world.NullWorld;
+import com.flawlessdemocracy.world.RectangleWorld;
+import com.flawlessdemocracy.world.RectangleWorldCanvas;
 import com.flawlessdemocracy.world.WorldFrame;
 import com.formdev.flatlaf.FlatDarkLaf;
 import java.awt.Color;
@@ -42,10 +44,9 @@ public class FlawlessDemocracy extends javax.swing.JFrame {
         addParty(DEFAULT_REPUBLICAN_PARTY);
         
         blobGrid.setup();
-        WorldFrame frame = new WorldFrame("World 1", new NullWorld());
+        WorldFrame frame = new WorldFrame("World 1", new RectangleWorldCanvas(new RectangleWorld(blobGrid.getParties(), 20, 20)));
         desktopPane.add(frame);
         
-        System.out.println(Thread.currentThread().getName());
         Timer timer = new Timer(10, (event) -> {
             frame.repaint();
         });
@@ -348,7 +349,7 @@ public class FlawlessDemocracy extends javax.swing.JFrame {
 
     private void iterateButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_iterateButtonMouseClicked
         //blobGrid.iterate(getIterations());
-        WorldFrame frame = new WorldFrame("World 1", new NullWorld());
+        WorldFrame frame = new WorldFrame("World 1", new RectangleWorldCanvas(new NullWorld()));
         desktopPane.add(frame);
         
         Timer timer = new Timer(10, (event) -> {
