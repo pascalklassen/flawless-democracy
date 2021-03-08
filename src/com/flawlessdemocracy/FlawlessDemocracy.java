@@ -349,7 +349,7 @@ public class FlawlessDemocracy extends javax.swing.JFrame {
 
     private void iterateButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_iterateButtonMouseClicked
         //blobGrid.iterate(getIterations());
-        WorldFrame frame = new WorldFrame("World 1", new RectangleWorldCanvas(new NullWorld()));
+        WorldFrame frame = new WorldFrame("World 1", new RectangleWorldCanvas(new RectangleWorld(blobGrid.getParties(), 20, 20)));
         desktopPane.add(frame);
         
         Timer timer = new Timer(10, (event) -> {
