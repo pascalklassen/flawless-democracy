@@ -1,5 +1,5 @@
 
-package com.flawlessdemocracy.world;
+package com.flawlessdemocracy.world.position;
 
 public final class Position2D implements Position {
     

@@ -1,37 +1,55 @@
 
 package com.flawlessdemocracy.world;
 
-import java.awt.Color;
+import com.flawlessdemocracy.Blob;
+import com.flawlessdemocracy.world.position.Position2D;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.util.Random;
 
-public final class RectangleWorldCanvas extends WorldCanvas {
+public final class RectangleWorldCanvas extends WorldCanvas<RectangleWorld> {
+    
+    private static final int CELL_WIDTH = 20;
+    private static final int CELL_HEIGHT = 20;
+    
+    private static final int CELL_BORDER_WIDTH = 2;
+    private static final int CELL_BORDER_HEIGHT = 2;
+    
+    private final int rows;
+    private final int columns;
     
     public RectangleWorldCanvas(RectangleWorld world) {
         super(world);
-        setSize(400, 400);
+        this.rows = world.getRows();
+        this.columns = world.getColumns();
+        
+        setSize(CELL_WIDTH * columns, CELL_HEIGHT * rows);
+        
+        world.randomize();
     }
     
     @Override
     public void paint(Graphics g) {
         super.paint(g);
-        Random random = new Random(System.currentTimeMillis());
-        Graphics2D g2d = (Graphics2D) g;
-        for (int i = 0; i < 20; i++) {
-            for (int j = 0; j < 20; j++) {
-                int bw = 2;
-                int bh = 2;
-                
-                int w = (getWidth() / 20) - bw;
-                int h = (getHeight() / 20) - bh;
-                
-                int x = j * (w + bw) + (bw / 2);
-                int y = i * (h + bh) + (bh / 2);
-                
-                g2d.setColor(new Color(random.nextInt(256), random.nextInt(256), random.nextInt(256)));
-                g2d.fillRect(x, y, w, h);
-            }
-        }
+        
+        System.out.printf("time %s ", System.currentTimeMillis());
+        
+        world.getBlobs().forEach(blob -> {
+            paintBlob(blob, (Graphics2D) g);
+        });
     }
+    
+    private void paintBlob(Blob<Position2D> blob, Graphics2D g) {
+        Position2D pos = blob.getPosition();
+        
+        int w = CELL_WIDTH - CELL_BORDER_WIDTH;
+        int h = CELL_HEIGHT - CELL_BORDER_HEIGHT;
+
+        int x = pos.getX() * CELL_WIDTH + (CELL_BORDER_WIDTH / 2);
+        int y = pos.getY() * CELL_HEIGHT + (CELL_BORDER_HEIGHT / 2);
+        
+        g.setColor(blob.getParty().getColor());
+        g.fillRect(x, y, w, h);
+    }
+
+    
 }

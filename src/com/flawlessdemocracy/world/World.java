@@ -1,6 +1,8 @@
 
 package com.flawlessdemocracy.world;
 
+import com.flawlessdemocracy.world.position.Position;
+import com.flawlessdemocracy.world.position.PositionFactory;
 import com.flawlessdemocracy.Blob;
 import com.flawlessdemocracy.Party;
 import java.util.ArrayList;
@@ -8,16 +10,16 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-public abstract class World {
+public abstract class World<PositionF extends PositionFactory> {
     
-    protected final PositionFactory positions;
+    protected final PositionF positions;
     
     protected final List<Party> parties;
     protected final List<Blob> blobs;
     
     protected final Random random;
     
-    public World(PositionFactory positions, List<Party> parties) {
+    public World(PositionF positions, List<Party> parties) {
         this.positions = positions;
         this.parties = parties;
         this.blobs = new ArrayList();
@@ -40,6 +42,10 @@ public abstract class World {
         return blobs.get(position.asLinear());
     }
     
+    public Blob getRandomBlob() {
+        return blobs.get(positions.randomPosition().asLinear());
+    }
+    
     public List<Blob> getBlobs() {
         return Collections.unmodifiableList(blobs);
     }
@@ -55,6 +61,7 @@ public abstract class World {
             }
         }
         
+        System.out.printf("n %s", neighbors.size());
         return neighbors;
     }
 }

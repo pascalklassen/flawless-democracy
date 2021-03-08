@@ -1,5 +1,5 @@
 
-package com.flawlessdemocracy.world;
+package com.flawlessdemocracy.world.position;
 
 public interface Position {
     

@@ -1,7 +1,6 @@
 
 package com.flawlessdemocracy;
 
-import com.flawlessdemocracy.world.NullWorld;
 import com.flawlessdemocracy.world.RectangleWorld;
 import com.flawlessdemocracy.world.RectangleWorldCanvas;
 import com.flawlessdemocracy.world.WorldFrame;
@@ -13,7 +12,6 @@ import java.util.ArrayList;
 import java.util.Random;
 import javax.swing.JColorChooser;
 import javax.swing.JTextField;
-import javax.swing.Timer;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -28,8 +26,6 @@ public class FlawlessDemocracy extends javax.swing.JFrame {
     
     private static final Party DEFAULT_DEMOCRATIC_PARTY = new Party("Democrats", Color.BLUE);
     private static final Party DEFAULT_REPUBLICAN_PARTY = new Party("Republicans", Color.RED);
-    
-    private final BlobGrid blobGrid;
 
     public FlawlessDemocracy() {
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/resources/putin.png")));
@@ -39,19 +35,12 @@ public class FlawlessDemocracy extends javax.swing.JFrame {
         setGridWidth(DEFAULT_GRID_WIDTH);
         setGridHeight(DEFAULT_GRID_HEIGHT);
         
-        blobGrid = new BlobGrid(getGridWidth(), getGridHeight(), new ArrayList(), random);
         addParty(DEFAULT_DEMOCRATIC_PARTY);
         addParty(DEFAULT_REPUBLICAN_PARTY);
         
-        blobGrid.setup();
-        WorldFrame frame = new WorldFrame("World 1", new RectangleWorldCanvas(new RectangleWorld(blobGrid.getParties(), 20, 20)));
+        WorldFrame frame = new WorldFrame("World 1", new RectangleWorldCanvas(new RectangleWorld(new ArrayList(), 20, 20)));
         desktopPane.add(frame);
-        
-        Timer timer = new Timer(10, (event) -> {
-            frame.repaint();
-        });
-        timer.setRepeats(true);
-        timer.start();
+        frame.start();
     }
 
     @SuppressWarnings("unchecked")
@@ -349,14 +338,6 @@ public class FlawlessDemocracy extends javax.swing.JFrame {
 
     private void iterateButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_iterateButtonMouseClicked
         //blobGrid.iterate(getIterations());
-        WorldFrame frame = new WorldFrame("World 1", new RectangleWorldCanvas(new RectangleWorld(blobGrid.getParties(), 20, 20)));
-        desktopPane.add(frame);
-        
-        Timer timer = new Timer(10, (event) -> {
-            frame.repaint();
-        });
-        timer.setRepeats(true);
-        timer.start();
     }//GEN-LAST:event_iterateButtonMouseClicked
 
     private void chooseColorButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_chooseColorButtonMouseClicked
@@ -380,7 +361,6 @@ public class FlawlessDemocracy extends javax.swing.JFrame {
     }//GEN-LAST:event_addPartyButtonMouseClicked
     
     private void gridRandomizeButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_gridRandomizeButtonMouseClicked
-        blobGrid.setup(getGridWidth(), getGridHeight());
     }//GEN-LAST:event_gridRandomizeButtonMouseClicked
     
     
@@ -388,14 +368,11 @@ public class FlawlessDemocracy extends javax.swing.JFrame {
     private void addParty(Party party) {
         DefaultTableModel model = (DefaultTableModel) partyTable.getModel();
         model.addRow(new Object[] {party.getName(), createColorField(party.getColor())});
-        blobGrid.addParty(party);
     }
     
     private int getIterations() {
         int iters = (int) iterationSpinner.getValue();
         
-        if (iters < BlobGrid.MIN_ITERATIONS) iters = BlobGrid.MIN_ITERATIONS;
-        if (iters > BlobGrid.MAX_ITERATIONS) iters = BlobGrid.MAX_ITERATIONS;
         iterationSpinner.setValue(iters);
         
         return iters;
@@ -404,8 +381,6 @@ public class FlawlessDemocracy extends javax.swing.JFrame {
     private int getGridWidth() {
         int gridWidth = (int) gridWidthSpinner.getValue();
         
-        if (gridWidth < BlobGrid.MIN_GRID_WIDTH) gridWidth = BlobGrid.MIN_GRID_WIDTH;
-        if (gridWidth > BlobGrid.MAX_GRID_WIDTH) gridWidth = BlobGrid.MAX_GRID_WIDTH;
         gridWidthSpinner.setValue(gridWidth);
         
         return gridWidth;
@@ -414,17 +389,12 @@ public class FlawlessDemocracy extends javax.swing.JFrame {
     private void setGridWidth(int width) {
         int gridWidth = width;
         
-        if (gridWidth < BlobGrid.MIN_GRID_WIDTH) gridWidth = BlobGrid.MIN_GRID_WIDTH;
-        if (gridWidth > BlobGrid.MAX_GRID_WIDTH) gridWidth = BlobGrid.MAX_GRID_WIDTH;
-        
         gridWidthSpinner.setValue(gridWidth);
     }
     
     private int getGridHeight() {
         int gridHeight = (int) gridHeightSpinner.getValue();
         
-        if (gridHeight < BlobGrid.MIN_GRID_HEIGHT) gridHeight = BlobGrid.MIN_GRID_HEIGHT;
-        if (gridHeight > BlobGrid.MAX_GRID_HEIGHT) gridHeight = BlobGrid.MAX_GRID_HEIGHT;
         gridHeightSpinner.setValue(gridHeight);
         
         return gridHeight;
@@ -432,9 +402,6 @@ public class FlawlessDemocracy extends javax.swing.JFrame {
     
     private void setGridHeight(int height) {
         int gridHeight = height;
-        
-        if (gridHeight < BlobGrid.MIN_GRID_HEIGHT) gridHeight = BlobGrid.MIN_GRID_HEIGHT;
-        if (gridHeight > BlobGrid.MAX_GRID_HEIGHT) gridHeight = BlobGrid.MAX_GRID_HEIGHT;
         
         gridHeightSpinner.setValue(gridHeight);
     }
