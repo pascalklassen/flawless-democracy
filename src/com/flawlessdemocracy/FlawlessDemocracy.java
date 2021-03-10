@@ -1,7 +1,6 @@
 
 package com.flawlessdemocracy;
 
-import com.flawlessdemocracy.world.NullWorld;
 import com.flawlessdemocracy.world.RectangleWorld;
 import com.flawlessdemocracy.world.RectangleWorldCanvas;
 import com.flawlessdemocracy.world.WorldFrame;
