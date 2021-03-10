@@ -1,18 +1,18 @@
 
 package com.flawlessdemocracy.world;
 
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.util.Random;
 import javax.swing.JComponent;
 
-public abstract class WorldCanvas extends JComponent {
+public abstract class WorldCanvas<WorldT extends World> extends JComponent {
     
-    protected final World world;
+    protected final WorldT world;
     
-    public WorldCanvas(World world) {
+    public WorldCanvas(WorldT world) {
         this.world = world;
         setDoubleBuffered(true);
+    }
+    
+    public void iterate(int n) {
+        world.iterate(n);
     }
 }

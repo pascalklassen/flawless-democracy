@@ -1,33 +1,19 @@
 
 package com.flawlessdemocracy;
 
-import java.awt.Dimension;
-import javax.swing.JPanel;
+import com.flawlessdemocracy.world.position.Position;
 
-public final class Blob {
+public final class Blob<PositionT extends Position> {
     
-    public static final Dimension CELL_SIZE_DIMENSION = new Dimension(10, 10);
-    
-    private final Position position;
+    private final PositionT position;
     private Party party;
     
-    private final JPanel panel;
-    
-    public Blob(Position position, Party party) {
+    public Blob(PositionT position, Party party) {
         this.position = position;
         this.party = party;
-        this.panel = new JPanel();
-        panel.setPreferredSize(CELL_SIZE_DIMENSION);
-        
-        repaint();
     }
     
-    private void repaint() {
-        panel.setBackground(getParty().getColor());
-        panel.repaint();
-    }
-    
-    public Position getPosition() {
+    public PositionT getPosition() {
         return position;
     }
     
@@ -37,10 +23,5 @@ public final class Blob {
     
     public void setParty(Party party) {
         this.party = party;
-        repaint();
-    }
-    
-    public JPanel getPanel() {
-        return panel;
     }
 }
