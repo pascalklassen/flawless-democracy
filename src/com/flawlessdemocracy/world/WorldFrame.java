@@ -13,9 +13,11 @@ public final class WorldFrame extends JInternalFrame {
         super(title, false, true, false, true);
         this.canvas = canvas;
         
-        this.timer = new Timer(150, e -> {
-            canvas.iterate(1);
-            repaint();
+        this.timer = new Timer(5, e -> {
+            canvas.iterate(500);
+            
+            canvas.revalidate();
+            canvas.repaint();
         });
         timer.setRepeats(true);
         
@@ -26,6 +28,9 @@ public final class WorldFrame extends JInternalFrame {
     
     public void start() {
         timer.start();
+//        canvas.iterate(1);
+//        canvas.revalidate();
+//        canvas.repaint();
     }
     
     public void stop() {

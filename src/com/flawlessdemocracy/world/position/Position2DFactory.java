@@ -31,7 +31,7 @@ public final class Position2DFactory implements PositionFactory {
 
     @Override
     public Position2D randomPosition() {
-        return newPosition(getColumns(), getRows());
+        return newPosition(random.nextInt(getColumns()), random.nextInt(getRows()));
     }
     
     public int getRows() {

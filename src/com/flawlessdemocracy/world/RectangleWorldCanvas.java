@@ -26,16 +26,12 @@ public final class RectangleWorldCanvas extends WorldCanvas<RectangleWorld> {
         
         world.randomize();
     }
-    
+
     @Override
-    public void paint(Graphics g) {
-        super.paint(g);
-        
-        System.out.printf("time %s ", System.currentTimeMillis());
-        
-        world.getBlobs().forEach(blob -> {
+    protected void paintComponent(Graphics g) {
+        for (Blob blob : world.getBlobs()) {
             paintBlob(blob, (Graphics2D) g);
-        });
+        }
     }
     
     private void paintBlob(Blob<Position2D> blob, Graphics2D g) {

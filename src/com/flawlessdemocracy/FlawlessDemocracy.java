@@ -9,7 +9,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.util.ArrayList;
-import java.util.Random;
 import javax.swing.JColorChooser;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
@@ -26,11 +25,12 @@ public class FlawlessDemocracy extends javax.swing.JFrame {
     
     private static final Party DEFAULT_DEMOCRATIC_PARTY = new Party("Democrats", Color.BLUE);
     private static final Party DEFAULT_REPUBLICAN_PARTY = new Party("Republicans", Color.RED);
+    
+    WorldFrame frame;
 
     public FlawlessDemocracy() {
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/resources/putin.png")));
         initComponents();
-        Random random = new Random(System.currentTimeMillis());
         
         setGridWidth(DEFAULT_GRID_WIDTH);
         setGridHeight(DEFAULT_GRID_HEIGHT);
@@ -38,7 +38,7 @@ public class FlawlessDemocracy extends javax.swing.JFrame {
         addParty(DEFAULT_DEMOCRATIC_PARTY);
         addParty(DEFAULT_REPUBLICAN_PARTY);
         
-        WorldFrame frame = new WorldFrame("World 1", new RectangleWorldCanvas(new RectangleWorld(new ArrayList(), 20, 20)));
+        frame = new WorldFrame("World 1", new RectangleWorldCanvas(new RectangleWorld(new ArrayList(), 20, 20)));
         desktopPane.add(frame);
         frame.start();
     }
@@ -75,7 +75,6 @@ public class FlawlessDemocracy extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Flawless Democracy");
-        setMaximumSize(new java.awt.Dimension(1300, 700));
         setMinimumSize(new java.awt.Dimension(1300, 700));
         setName("gameFrame"); // NOI18N
         setResizable(false);
@@ -253,7 +252,7 @@ public class FlawlessDemocracy extends javax.swing.JFrame {
                         .addGroup(controlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(tableScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 360, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(gridConfigPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 10, Short.MAX_VALUE))))
+                        .addGap(0, 6, Short.MAX_VALUE))))
         );
         controlPanelLayout.setVerticalGroup(
             controlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -289,7 +288,7 @@ public class FlawlessDemocracy extends javax.swing.JFrame {
                     .addComponent(gameSeperator, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(gridConfigPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(125, Short.MAX_VALUE))
+                .addContainerGap(117, Short.MAX_VALUE))
         );
 
         tabbedPane.addTab("Controls", new javax.swing.ImageIcon(getClass().getResource("/resources/controls.png")), controlPanel); // NOI18N
@@ -338,6 +337,7 @@ public class FlawlessDemocracy extends javax.swing.JFrame {
 
     private void iterateButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_iterateButtonMouseClicked
         //blobGrid.iterate(getIterations());
+        frame.start();
     }//GEN-LAST:event_iterateButtonMouseClicked
 
     private void chooseColorButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_chooseColorButtonMouseClicked

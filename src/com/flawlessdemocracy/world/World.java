@@ -61,7 +61,6 @@ public abstract class World<PositionF extends PositionFactory> {
             }
         }
         
-        System.out.printf("n %s", neighbors.size());
         return neighbors;
     }
 }

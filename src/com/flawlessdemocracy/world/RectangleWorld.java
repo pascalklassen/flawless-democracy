@@ -4,13 +4,17 @@ package com.flawlessdemocracy.world;
 import com.flawlessdemocracy.Blob;
 import com.flawlessdemocracy.world.position.Position2DFactory;
 import com.flawlessdemocracy.Party;
+import com.flawlessdemocracy.world.position.Position;
+import com.flawlessdemocracy.world.position.Position2D;
 import java.awt.Color;
+import java.util.Arrays;
 import java.util.List;
 
 public final class RectangleWorld extends World<Position2DFactory> {
     
     private final int rows;
     private final int columns;
+    public int counter = 0;
 
     public RectangleWorld(List<Party> parties, int rows, int columns) {
         super(new Position2DFactory(rows, columns), parties);
@@ -21,12 +25,17 @@ public final class RectangleWorld extends World<Position2DFactory> {
 
     @Override
     public void iterate(int n) {
-        Blob left = getRandomBlob();
-        Blob right = getNeighborsAt(left.getPosition()).get(random.nextInt(8));
+        for (int i = 0; i < n; i++) {
+            System.out.println(counter++);
+            Blob<Position2D> left = getRandomBlob();
+        
+            List<Blob> neighbors = getNeighborsAt(left.getPosition());
+            Blob<Position2D> right = neighbors.get(random.nextInt(neighbors.size()));
 
-        if (!left.getParty().equals(right.getParty())) {
-            if (random.nextBoolean()) {
-                right.setParty(left.getParty());
+            if (!left.getParty().equals(right.getParty())) {
+                if (random.nextBoolean()) {
+                    right.setParty(left.getParty());
+                }
             }
         }
     }
@@ -45,6 +54,15 @@ public final class RectangleWorld extends World<Position2DFactory> {
                 );
             }
         }
+    }
+    @Override
+    public List<Blob> getNeighborsAt(Position position) {
+        return Arrays.asList(
+                getBlobAt(position.relative(0, 1)),
+                getBlobAt(position.relative(1, 0)),
+                getBlobAt(position.relative(0, -1)),
+                getBlobAt(position.relative(-1, 0))
+        );
     }
     
     public int getRows() {
