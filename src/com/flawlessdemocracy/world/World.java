@@ -10,7 +10,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-public abstract class World<PositionF extends PositionFactory> {
+public abstract class World<PositionF extends PositionFactory, PositionT extends Position> {
     
     protected final PositionF positions;
     
@@ -38,7 +38,7 @@ public abstract class World<PositionF extends PositionFactory> {
         return Collections.unmodifiableList(parties);
     }
     
-    public Blob getBlobAt(Position position) {
+    public Blob getBlobAt(PositionT position) {
         return blobs.get(position.asLinear());
     }
     
@@ -50,17 +50,7 @@ public abstract class World<PositionF extends PositionFactory> {
         return Collections.unmodifiableList(blobs);
     }
     
-    public List<Blob> getNeighborsAt(Position position) {
-        List<Blob> neighbors = new ArrayList();
-        
-        for (int i = -1; i <= 1; i++) {
-            for (int j = -1; j <= 1; j++) {
-                if (i == 0 && j == 0) continue;
-                
-                neighbors.add(getBlobAt(position.relative(j, i)));
-            }
-        }
-        
-        return neighbors;
+    public List<Blob> getNeighborsAt(PositionT position) {
+        return Collections.EMPTY_LIST;
     }
 }

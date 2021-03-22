@@ -5,5 +5,5 @@ public interface Position {
     
     int asLinear();
     
-    Position relative(int x, int y);
+    double distance(Position other);
 }

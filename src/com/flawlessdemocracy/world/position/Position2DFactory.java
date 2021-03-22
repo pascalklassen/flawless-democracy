@@ -15,8 +15,12 @@ public final class Position2DFactory implements PositionFactory {
         this.columns = columns;
         this.random = new Random(System.currentTimeMillis());
     }
-
+    
     @Override
+    public Position2D randomPosition() {
+        return newPosition(random.nextInt(getColumns()), random.nextInt(getRows()));
+    }
+
     public Position2D newPosition(int x, int y) {
         int a = x;
         int b = y;
@@ -27,11 +31,6 @@ public final class Position2DFactory implements PositionFactory {
         if (y >= getRows()) b = 0;
         
         return new Position2D(this, a, b);
-    }
-
-    @Override
-    public Position2D randomPosition() {
-        return newPosition(random.nextInt(getColumns()), random.nextInt(getRows()));
     }
     
     public int getRows() {

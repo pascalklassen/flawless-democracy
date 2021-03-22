@@ -4,13 +4,12 @@ package com.flawlessdemocracy.world;
 import com.flawlessdemocracy.Blob;
 import com.flawlessdemocracy.world.position.Position2DFactory;
 import com.flawlessdemocracy.Party;
-import com.flawlessdemocracy.world.position.Position;
 import com.flawlessdemocracy.world.position.Position2D;
 import java.awt.Color;
 import java.util.Arrays;
 import java.util.List;
 
-public final class RectangleWorld extends World<Position2DFactory> {
+public final class RectangleWorld extends World<Position2DFactory, Position2D> {
     
     private final int rows;
     private final int columns;
@@ -55,8 +54,9 @@ public final class RectangleWorld extends World<Position2DFactory> {
             }
         }
     }
+    
     @Override
-    public List<Blob> getNeighborsAt(Position position) {
+    public List<Blob> getNeighborsAt(Position2D position) {
         return Arrays.asList(
                 getBlobAt(position.relative(0, 1)),
                 getBlobAt(position.relative(1, 0)),

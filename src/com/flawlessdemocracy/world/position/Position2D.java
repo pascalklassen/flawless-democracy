@@ -17,8 +17,19 @@ public final class Position2D implements Position {
     public int asLinear() {
         return factory.getColumns() * getY() + getX();
     }
-
+    
     @Override
+    public double distance(Position other) {
+        if (!(other instanceof Position2D)) {
+            throw new UnsupportedOperationException("No positions other then Position2D are supported.");
+        }
+        
+        Position2D pos = (Position2D) other;
+        
+        // TODO: define distance
+        return -1;
+    }
+    
     public Position2D relative(int x, int y) {
         return factory.newPosition(getX() + x, getY() + y);
     }
