@@ -1,7 +1,7 @@
 
 package com.flawlessdemocracy.world.position;
 
-public final class Position2D implements Position {
+public final class Position2D implements Position<Position2D> {
     
     private final Position2DFactory factory;
     private final int x;
@@ -19,17 +19,11 @@ public final class Position2D implements Position {
     }
     
     @Override
-    public double distance(Position other) {
-        if (!(other instanceof Position2D)) {
-            throw new UnsupportedOperationException("No positions other then Position2D are supported.");
-        }
-        
-        Position2D pos = (Position2D) other;
-        
+    public double distance(Position2D other) {
         // TODO: define distance
         return -1;
     }
-    
+//    hi pascal
     public Position2D relative(int x, int y) {
         return factory.newPosition(getX() + x, getY() + y);
     }

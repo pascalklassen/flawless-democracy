@@ -38,7 +38,7 @@ public class FlawlessDemocracy extends javax.swing.JFrame {
         addParty(DEFAULT_DEMOCRATIC_PARTY);
         addParty(DEFAULT_REPUBLICAN_PARTY);
         
-        frame = new WorldFrame("World 1", new RectangleWorldCanvas(new RectangleWorld(new ArrayList(), 20, 20)));
+        frame = new WorldFrame("World 1", new RectangleWorldCanvas(new RectangleWorld(new ArrayList(), 40, 40)));
         desktopPane.add(frame);
         frame.start();
     }

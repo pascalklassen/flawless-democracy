@@ -3,7 +3,7 @@ package com.flawlessdemocracy.world.position;
 
 import java.util.Random;
 
-public final class Position2DFactory implements PositionFactory {
+public final class Position2DFactory implements PositionFactory<Position2D> {
     
     private final int rows;
     private final int columns;

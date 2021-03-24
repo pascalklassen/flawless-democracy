@@ -13,7 +13,6 @@ public final class RectangleWorld extends World<Position2DFactory, Position2D> {
     
     private final int rows;
     private final int columns;
-    public int counter = 0;
 
     public RectangleWorld(List<Party> parties, int rows, int columns) {
         super(new Position2DFactory(rows, columns), parties);
@@ -25,7 +24,6 @@ public final class RectangleWorld extends World<Position2DFactory, Position2D> {
     @Override
     public void iterate(int n) {
         for (int i = 0; i < n; i++) {
-            System.out.println(counter++);
             Blob<Position2D> left = getRandomBlob();
         
             List<Blob> neighbors = getNeighborsAt(left.getPosition());

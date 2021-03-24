@@ -1,7 +1,7 @@
 
 package com.flawlessdemocracy.world.position;
 
-public interface PositionFactory {
+public interface PositionFactory<PositionT extends Position> {
     
-    Position randomPosition();
+    PositionT randomPosition();
 }
