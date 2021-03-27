@@ -12,7 +12,9 @@ public abstract class WorldCanvas<WorldT extends World> extends JComponent {
         setDoubleBuffered(true);
     }
     
-    public void iterate(int n) {
-        world.iterate(n);
+    public abstract void update();
+    
+    public WorldT getWorld() {
+        return world;
     }
 }

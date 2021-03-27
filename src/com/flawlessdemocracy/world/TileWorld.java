@@ -9,12 +9,12 @@ import java.awt.Color;
 import java.util.Arrays;
 import java.util.List;
 
-public final class RectangleWorld extends World<Position2DFactory, Position2D> {
+public final class TileWorld extends World<Position2DFactory, Position2D> {
     
     private final int rows;
     private final int columns;
 
-    public RectangleWorld(List<Party> parties, int rows, int columns) {
+    public TileWorld(List<Party> parties, int rows, int columns) {
         super(new Position2DFactory(rows, columns), parties);
         
         this.rows = rows;
