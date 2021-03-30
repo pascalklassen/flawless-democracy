@@ -269,7 +269,7 @@
                 <Property name="text" type="java.lang.String" value="Add Party"/>
               </Properties>
               <Events>
-                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="addPartyButtonMouseClicked"/>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="onAddPartyButton"/>
               </Events>
             </Component>
             <Component class="javax.swing.JTextField" name="colorField">
@@ -292,7 +292,7 @@
                 <Property name="text" type="java.lang.String" value="Choose Color"/>
               </Properties>
               <Events>
-                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="chooseColorButtonMouseClicked"/>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="onChooseColorButton"/>
               </Events>
             </Component>
             <Container class="javax.swing.JScrollPane" name="tableScrollPane">

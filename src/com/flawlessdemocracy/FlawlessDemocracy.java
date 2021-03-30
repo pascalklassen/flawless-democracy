@@ -3,8 +3,7 @@ package com.flawlessdemocracy;
 
 import com.flawlessdemocracy.world.TileWorld;
 import com.flawlessdemocracy.world.TileWorldCanvas;
-import com.flawlessdemocracy.world.WorldCanvas;
-import com.flawlessdemocracy.world.WorldRenderer;
+import com.flawlessdemocracy.world.TileWorldRenderer;
 import com.formdev.flatlaf.FlatDarkLaf;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -49,7 +48,7 @@ public class FlawlessDemocracy extends javax.swing.JFrame {
     private static final Party DEFAULT_DEMOCRATIC_PARTY = new Party("Democrats", Color.BLUE);
     private static final Party DEFAULT_REPUBLICAN_PARTY = new Party("Republicans", Color.RED);
     
-    private WorldRenderer renderer;
+    private TileWorldRenderer renderer;
 
     public FlawlessDemocracy() {
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/resources/putin.png")));
@@ -89,13 +88,13 @@ public class FlawlessDemocracy extends javax.swing.JFrame {
         addParty(DEFAULT_DEMOCRATIC_PARTY);
         addParty(DEFAULT_REPUBLICAN_PARTY);
         
-        WorldCanvas canvas = new TileWorldCanvas(
+        TileWorldCanvas canvas = new TileWorldCanvas(
                 new TileWorld(new ArrayList(), getGridHeight(), getGridWidth()),
                 getCellSize(),
                 getBorderWidth()
         );
         scrollPane.setViewportView(canvas);
-        renderer = new WorldRenderer(canvas, getInterval());
+        renderer = new TileWorldRenderer(canvas, getInterval(), (DefaultTableModel) partyTable.getModel());
     }
 
     @SuppressWarnings("unchecked")
@@ -177,7 +176,7 @@ public class FlawlessDemocracy extends javax.swing.JFrame {
         addPartyButton.setText("Add Party");
         addPartyButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                addPartyButtonMouseClicked(evt);
+                onAddPartyButton(evt);
             }
         });
 
@@ -190,7 +189,7 @@ public class FlawlessDemocracy extends javax.swing.JFrame {
         chooseColorButton.setText("Choose Color");
         chooseColorButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                chooseColorButtonMouseClicked(evt);
+                onChooseColorButton(evt);
             }
         });
 
@@ -439,16 +438,16 @@ public class FlawlessDemocracy extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void chooseColorButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_chooseColorButtonMouseClicked
+    private void onChooseColorButton(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_onChooseColorButton
         Color color = JColorChooser.showDialog(this, "Choose a Party Color", Color.WHITE);
          
         if (color != null) {
             colorField.setBackground(color);
             colorField.repaint();
         }
-    }//GEN-LAST:event_chooseColorButtonMouseClicked
+    }//GEN-LAST:event_onChooseColorButton
 
-    private void addPartyButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addPartyButtonMouseClicked
+    private void onAddPartyButton(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_onAddPartyButton
         String name = partyNameField.getText();
         Color color = colorField.getBackground();
         if (name == null || name.isEmpty() || name.equals("")) return;
@@ -457,11 +456,12 @@ public class FlawlessDemocracy extends javax.swing.JFrame {
         addParty(party);
         partyNameField.setText("");
         colorField.setBackground(new Color(60, 63, 65));
-    }//GEN-LAST:event_addPartyButtonMouseClicked
+    }//GEN-LAST:event_onAddPartyButton
 
     private void onStartButton(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_onStartButton
         if (startButton.isEnabled()) {
             renderer.execute();
+            
             startButton.setEnabled(false);
             pauseButton.setEnabled(true);
             stopButton.setEnabled(true);
@@ -473,8 +473,8 @@ public class FlawlessDemocracy extends javax.swing.JFrame {
     private void onPauseButton(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_onPauseButton
         if (pauseButton.isEnabled()) {
             if (renderer.isPaused()) {
-            renderer.unpause();
-            restartButton.setEnabled(false);
+                renderer.unpause();
+                restartButton.setEnabled(false);
             } else {
                 renderer.pause();
             }
@@ -494,13 +494,13 @@ public class FlawlessDemocracy extends javax.swing.JFrame {
 
     private void onRestartButton(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_onRestartButton
         if (restartButton.isEnabled()) {
-            WorldCanvas canvas = new TileWorldCanvas(
+            TileWorldCanvas canvas = new TileWorldCanvas(
                 new TileWorld(new ArrayList(), getGridHeight(), getGridWidth()),
                 getCellSize(),
                 getBorderWidth()
             );
             scrollPane.setViewportView(canvas);
-            renderer = new WorldRenderer(canvas, getInterval());
+            renderer = new TileWorldRenderer(canvas, getInterval(), (DefaultTableModel) partyTable.getModel());
 
             startButton.setEnabled(true);
         }
