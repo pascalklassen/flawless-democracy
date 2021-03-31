@@ -5,7 +5,6 @@ import com.flawlessdemocracy.Blob;
 import com.flawlessdemocracy.world.position.Position2DFactory;
 import com.flawlessdemocracy.Party;
 import com.flawlessdemocracy.world.position.Position2D;
-import java.awt.Color;
 import java.util.Arrays;
 import java.util.List;
 
@@ -44,9 +43,7 @@ public final class TileWorld extends World<Position2DFactory, Position2D> {
                 blobs.add(
                         new Blob<>(
                                 positions.newPosition(x, y),
-                                random.nextBoolean() ? 
-                                        new Party("Democrats", Color.BLUE) :
-                                        new Party("Republicans", Color.RED)
+                                getParties().get(random.nextInt(getParties().size()))
                         )
                 );
             }

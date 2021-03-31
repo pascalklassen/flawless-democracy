@@ -9,6 +9,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JColorChooser;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
@@ -41,12 +42,14 @@ public class FlawlessDemocracy extends javax.swing.JFrame {
         1_000_000,
         200_000,
         50_000,
-        10_000,
+        1_000,
         1
     };
     
     private static final Party DEFAULT_DEMOCRATIC_PARTY = new Party("Democrats", Color.BLUE);
     private static final Party DEFAULT_REPUBLICAN_PARTY = new Party("Republicans", Color.RED);
+    
+    private final List<Party> parties;
     
     private TileWorldRenderer renderer;
 
@@ -85,11 +88,13 @@ public class FlawlessDemocracy extends javax.swing.JFrame {
         pauseButton.setEnabled(false);
         stopButton.setEnabled(false);
         
+        parties = new ArrayList();
+        
         addParty(DEFAULT_DEMOCRATIC_PARTY);
         addParty(DEFAULT_REPUBLICAN_PARTY);
         
         TileWorldCanvas canvas = new TileWorldCanvas(
-                new TileWorld(new ArrayList(), getGridHeight(), getGridWidth()),
+                new TileWorld(parties, getGridHeight(), getGridWidth()),
                 getCellSize(),
                 getBorderWidth()
         );
@@ -202,22 +207,15 @@ public class FlawlessDemocracy extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Name", "Color", "Action"
+                "Name", "Percentage"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.Object.class, java.lang.Object.class
-            };
-            boolean[] canEdit = new boolean [] {
-                false, false, false
+                java.lang.String.class, java.lang.String.class
             };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
-            }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
             }
         });
         partyTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
@@ -495,7 +493,7 @@ public class FlawlessDemocracy extends javax.swing.JFrame {
     private void onRestartButton(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_onRestartButton
         if (restartButton.isEnabled()) {
             TileWorldCanvas canvas = new TileWorldCanvas(
-                new TileWorld(new ArrayList(), getGridHeight(), getGridWidth()),
+                new TileWorld(parties, getGridHeight(), getGridWidth()),
                 getCellSize(),
                 getBorderWidth()
             );
@@ -533,16 +531,9 @@ public class FlawlessDemocracy extends javax.swing.JFrame {
     }
     
     private void addParty(Party party) {
+        parties.add(party);
         DefaultTableModel model = (DefaultTableModel) partyTable.getModel();
-        model.addRow(new Object[] {party.getName(), createColorField(party.getColor())});
-    }
-    
-    private static JTextField createColorField(Color color) {
-        JTextField colorField = new JTextField();
-        colorField.setPreferredSize(new Dimension(20, 20));
-        colorField.setEnabled(false);
-        colorField.setBackground(color);
-        return colorField;
+        model.addRow(new Object[] {party.getName(), "0 %"});
     }
     
     public static void main(String args[]) {
