@@ -5,8 +5,9 @@ import com.flawlessdemocracy.Blob;
 import com.flawlessdemocracy.world.position.Position2DFactory;
 import com.flawlessdemocracy.Party;
 import com.flawlessdemocracy.world.position.Position2D;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public final class TileWorld extends World<Position2DFactory, Position2D> {
     
@@ -52,12 +53,9 @@ public final class TileWorld extends World<Position2DFactory, Position2D> {
     
     @Override
     public List<Blob> getNeighborsAt(Position2D position) {
-        return Arrays.asList(
-                getBlobAt(position.relative(0, 1)),
-                getBlobAt(position.relative(1, 0)),
-                getBlobAt(position.relative(0, -1)),
-                getBlobAt(position.relative(-1, 0))
-        );
+        return blobs.stream()
+                .filter(blob -> (blob.getPosition().distance(position) == 1))
+                .collect(Collectors.toList());
     }
     
     public int getRows() {

@@ -20,10 +20,10 @@ public final class Position2D implements Position<Position2D> {
     
     @Override
     public double distance(Position2D other) {
-        // TODO: define distance
-        return -1;
+        // TODO consider wraparound mechanic
+        return Math.abs(getX() - other.getX()) + Math.abs(getY() - other.getY());
     }
-//    hi pascal
+    
     public Position2D relative(int x, int y) {
         return factory.newPosition(getX() + x, getY() + y);
     }

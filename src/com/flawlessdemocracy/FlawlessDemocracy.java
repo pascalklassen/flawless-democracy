@@ -93,13 +93,7 @@ public class FlawlessDemocracy extends javax.swing.JFrame {
         addParty(DEFAULT_DEMOCRATIC_PARTY);
         addParty(DEFAULT_REPUBLICAN_PARTY);
         
-        TileWorldCanvas canvas = new TileWorldCanvas(
-                new TileWorld(parties, getGridHeight(), getGridWidth()),
-                getCellSize(),
-                getBorderWidth()
-        );
-        scrollPane.setViewportView(canvas);
-        renderer = new TileWorldRenderer(canvas, getInterval(), (DefaultTableModel) partyTable.getModel());
+        setupWorld();
     }
 
     @SuppressWarnings("unchecked")
@@ -492,13 +486,7 @@ public class FlawlessDemocracy extends javax.swing.JFrame {
 
     private void onRestartButton(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_onRestartButton
         if (restartButton.isEnabled()) {
-            TileWorldCanvas canvas = new TileWorldCanvas(
-                new TileWorld(parties, getGridHeight(), getGridWidth()),
-                getCellSize(),
-                getBorderWidth()
-            );
-            scrollPane.setViewportView(canvas);
-            renderer = new TileWorldRenderer(canvas, getInterval(), (DefaultTableModel) partyTable.getModel());
+            setupWorld();
 
             startButton.setEnabled(true);
         }
@@ -509,6 +497,16 @@ public class FlawlessDemocracy extends javax.swing.JFrame {
             renderer.setInterval(getInterval());
         }
     }//GEN-LAST:event_onSpeedSliderChange
+    
+    private void setupWorld() {
+        TileWorldCanvas canvas = new TileWorldCanvas(
+            new TileWorld(parties, getGridHeight(), getGridWidth()),
+            getCellSize(),
+            getBorderWidth()
+        );
+        scrollPane.setViewportView(canvas);
+        renderer = new TileWorldRenderer(canvas, getInterval(), (DefaultTableModel) partyTable.getModel());
+    }
     
     private int getGridWidth() {
         return (int) gridWidthSpinner.getValue();
