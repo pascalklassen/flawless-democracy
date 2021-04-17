@@ -1,7 +1,7 @@
 
 package com.flawlessdemocracy.world;
 
-import com.flawlessdemocracy.Blob;
+import com.flawlessdemocracy.Cell;
 import com.flawlessdemocracy.world.position.Position2D;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -31,7 +31,7 @@ public final class TileWorldCanvas extends WorldCanvas<TileWorld> {
         
         setPreferredSize(new Dimension(cellWidth * columns, cellHeight * rows));
         
-        world.randomize();
+        world.setup();
     }
     
     @Override
@@ -43,13 +43,13 @@ public final class TileWorldCanvas extends WorldCanvas<TileWorld> {
 
     @Override
     protected void paintComponent(Graphics g) {
-        world.getBlobs().forEach(blob -> {
-            paintBlob(blob, (Graphics2D) g);
+        world.getCells().forEach(cell -> {
+            paintCell(cell, (Graphics2D) g);
         });
     }
     
-    private void paintBlob(Blob<Position2D> blob, Graphics2D g) {
-        Position2D pos = blob.getPosition();
+    private void paintCell(Cell<Position2D> cell, Graphics2D g) {
+        Position2D pos = cell.getPosition();
         
         int w = cellWidth - borderWidth;
         int h = cellHeight - borderHeight;
@@ -57,7 +57,7 @@ public final class TileWorldCanvas extends WorldCanvas<TileWorld> {
         int x = pos.getX() * cellWidth + (borderWidth / 2);
         int y = pos.getY() * cellHeight + (borderHeight / 2);
         
-        g.setColor(blob.getParty().getColor());
+        g.setColor(cell.getColor());
         g.fillRect(x, y, w, h);
     }
 }

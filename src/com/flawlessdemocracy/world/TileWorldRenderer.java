@@ -1,7 +1,7 @@
 
 package com.flawlessdemocracy.world;
 
-import com.flawlessdemocracy.Blob;
+import com.flawlessdemocracy.Cell;
 import com.flawlessdemocracy.Party;
 import java.util.List;
 import javax.swing.SwingWorker;
@@ -42,27 +42,27 @@ public final class TileWorldRenderer extends SwingWorker<Void, Void> {
     }
     
     private boolean isDictatorship() {
-        return canvas.getWorld().getBlobs()
+        return canvas.getWorld().getCells()
                 .stream()
-                .map(Blob::getParty)
-                .allMatch(party -> party.equals(
-                        canvas.getWorld().getBlobs().get(0).getParty())
+                .map(Cell::getColor)
+                .allMatch(color -> color.equals(
+                        canvas.getWorld().getCells().get(0).getColor())
                 );
     }
     
     private void updateTable() {
         List<Party> parties = canvas.getWorld().getParties();
-        List<Blob> blobs = canvas.getWorld().getBlobs();
+        List<Cell> cells = canvas.getWorld().getCells();
         
         for (int i = 0; i < parties.size(); i++) {
             Party party = parties.get(i);
             int partyCount = 0;
             
-            for (Blob blob : blobs) {
-                if (blob.getParty().equals(party)) partyCount++;
+            for (Cell cell : cells) {
+                if (cell.getColor().equals(party.getColor())) partyCount++;
             }
             
-            table.setValueAt((int) (((float) partyCount / blobs.size()) * 100) + " %", i, 1);
+            table.setValueAt((int) (((float) partyCount / cells.size()) * 100) + " %", i, 1);
         }
     }
     

@@ -1,11 +1,11 @@
 
 package com.flawlessdemocracy.world;
 
-import com.flawlessdemocracy.Blob;
+import com.flawlessdemocracy.Cell;
 import com.flawlessdemocracy.world.position.Position2DFactory;
 import com.flawlessdemocracy.Party;
+import com.flawlessdemocracy.distributor.CellDistributor;
 import com.flawlessdemocracy.world.position.Position2D;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -14,8 +14,12 @@ public final class TileWorld extends World<Position2DFactory, Position2D> {
     private final int rows;
     private final int columns;
 
-    public TileWorld(List<Party> parties, int rows, int columns) {
-        super(new Position2DFactory(rows, columns), parties);
+    public TileWorld(List<Party> parties, int rows, int columns, CellDistributor distributor, boolean wraparound) {
+        super(
+            new Position2DFactory(rows, columns, wraparound),
+            distributor,
+            parties
+        );
         
         this.rows = rows;
         this.columns = columns;
@@ -24,37 +28,23 @@ public final class TileWorld extends World<Position2DFactory, Position2D> {
     @Override
     public void iterate(int n) {
         for (int i = 0; i < n; i++) {
-            Blob<Position2D> left = getRandomBlob();
+            Cell<Position2D> left = getRandomCell();
         
-            List<Blob> neighbors = getNeighborsAt(left.getPosition());
-            Blob<Position2D> right = neighbors.get(random.nextInt(neighbors.size()));
+            List<Cell> neighbors = getNextTo(left.getPosition());
+            Cell<Position2D> right = neighbors.get(random.nextInt(neighbors.size()));
 
-            if (!left.getParty().equals(right.getParty())) {
+            if (!left.getColor().equals(right.getColor())) {
                 if (random.nextBoolean()) {
-                    right.setParty(left.getParty());
+                    right.setColor(left.getColor());
                 }
-            }
-        }
-    }
-
-    @Override
-    public void randomize() {
-        for (int y = 0; y < getRows(); y++) {
-            for (int x = 0; x < getColumns(); x++) {
-                blobs.add(
-                        new Blob<>(
-                                positions.newPosition(x, y),
-                                getParties().get(random.nextInt(getParties().size()))
-                        )
-                );
             }
         }
     }
     
     @Override
-    public List<Blob> getNeighborsAt(Position2D position) {
-        return blobs.stream()
-                .filter(blob -> (blob.getPosition().distance(position) == 1))
+    public List<Cell> getNextTo(Position2D position) {
+        return cells.stream()
+                .filter(cell -> (cell.getPosition().distance(position) == 1))
                 .collect(Collectors.toList());
     }
     

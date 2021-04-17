@@ -7,9 +7,12 @@ import com.flawlessdemocracy.world.TileWorldRenderer;
 import com.formdev.flatlaf.FlatDarkLaf;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.EventQueue;
 import java.awt.Toolkit;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JColorChooser;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
@@ -451,7 +454,7 @@ public class FlawlessDemocracy extends javax.swing.JFrame {
     }//GEN-LAST:event_onAddPartyButton
 
     private void onStartButton(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_onStartButton
-        if (startButton.isEnabled()) {
+       if (startButton.isEnabled()) {
             renderer.execute();
             
             startButton.setEnabled(false);
